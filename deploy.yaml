@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spambot
+  labels:
+    spam: delicious
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      spam: delicious
+  template:
+    metadata:
+      labels:
+        spam: delicious
+    spec:
+      containers:
+      - name: spambot
+        image: mewse/spambot:latest
+        env:
+        - name: TARGET_URL
+          value: "http://10.43.0.96:30001/spam"
+        - name: PORT
+          value: "30000"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spambot2
+  labels:
+    spam: yumbles
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      spam: yumbles
+  template:
+    metadata:
+      labels:
+        spam: yumbles
+    spec:
+      containers:
+      - name: spambot
+        image: mewse/spambot:latest
+        env:
+        - name: TARGET_URL
+          value: "http://10.43.0.96:30000/spam"
+        - name: PORT
+          value: "30001"
